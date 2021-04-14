@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // 1) Importa dependências
 import {
   FormBuilder,
-  FormGroup,
+  FormGroup, 
   Validators,
   AbstractControl,
 } from '@angular/forms';
@@ -27,6 +27,7 @@ export function removeSpaces(control: AbstractControl) {
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactsPage implements OnInit {
+  
   // 3) Atributos
   public contactForm: FormGroup; // Contém o formulário de contatos
   public pipe = new DatePipe('en_US'); // Formatar as datas

@@ -21,7 +21,7 @@ const routes: Routes = [
   // Rota para a página inicial
   {
     path: '',
-    redirectTo: 'articles',
+    redirectTo: 'register',
     pathMatch: 'full'
   },
 
