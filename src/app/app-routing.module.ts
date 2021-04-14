@@ -70,6 +70,14 @@ const routes: Routes = [
     // Só pode ser vista se logado
     canActivate: [AngularFireAuthGuard], data: { authGuardPipe: toLogin }
   },
+  {
+    // Página de cadastro
+    path: 'register',
+    loadChildren: () => import('./user/register/register.module').then(m => m.RegisterPageModule),
+
+    // Só pode ser vista se logado
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: toLogin }
+  },
 
   // Página de erro 404
   // '**' TEM QUE SER SEMPRE A ÚLTIMA ROTA
@@ -77,7 +85,6 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/e404/e404.module').then(m => m.E404PageModule)
   }
-
 ];
 
 @NgModule({
