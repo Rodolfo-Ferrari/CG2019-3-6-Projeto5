@@ -14,7 +14,7 @@ import {
 const toLogin = () => redirectUnauthorizedTo(['/user/login']);
 
 // Usuário está logado? Vai para a página inicial.
-const isLogged = () => redirectLoggedInTo(['/articles']);
+const isLogged = () => redirectLoggedInTo(['/register']);
 
 const routes: Routes = [
 
@@ -25,11 +25,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
 
-  // Rota para a página 'Artigos'
-  {
-    path: 'articles',
-    loadChildren: () => import('./pages/articles/articles.module').then(m => m.ArticlesPageModule)
-  },
   {
     path: 'news',
     loadChildren: () => import('./pages/news/news.module').then(m => m.NewsPageModule)
@@ -41,13 +36,6 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
-  },
-  {
-    path: 'view/:id',
-    loadChildren: () => import('./pages/view/view.module').then(m => m.ViewPageModule),
-
-    // Só pode ser vista se logado
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: toLogin }
   },
   {
     path: 'user/login',

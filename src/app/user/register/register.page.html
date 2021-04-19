@@ -108,7 +108,16 @@
             <small *ngIf="registerForm.controls.gender.errors.required">* Obrigatório</small>
           </ion-text>
         </ion-label>
-        <ion-input type="text" id="gender" name="gender" formControlName="gender"></ion-input>
+        <ion-grid>
+          <ion-row>
+            <ion-col><label><input type="radio" formControlName="gender" value="Masculino"> &nbsp;Masculino</label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col><label><input type="radio" formControlName="gender" value="Feminino"> &nbsp;Feminino</label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
       <!-- Campo endereço (address) -->
@@ -132,7 +141,8 @@
 
     </ion-list>
 
-    <ion-button class="ion-margin-vertical" type="submit" expand="block" [disabled]="registerForm.invalid">Cadastrar</ion-button>
+    <ion-button class="ion-margin-vertical" type="submit" expand="block" [disabled]="registerForm.invalid">Cadastrar
+    </ion-button>
 
   </form>
 
