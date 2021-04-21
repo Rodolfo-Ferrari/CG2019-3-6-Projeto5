@@ -20,6 +20,17 @@
       <ion-card-title>{{ user.displayName }}</ion-card-title>
       <ion-card-subtitle>{{ user.phoneNumber }}</ion-card-subtitle>
     </ion-card-header>
+    <ion-card-content>
+      <!-- Perfil social -->
+      <p>
+        Você fez login usando uma conta do Google.
+        Para editar seu perfil e/ou trocar a senha, clique no botão abaixo:
+      </p>
+      <ion-button expand="block" (click)="profile()">
+        <ion-icon name="person" slot="start"></ion-icon>
+        Ver / Editar perfil
+      </ion-button>
+    </ion-card-content>
   </ion-card>
 
   <ion-card class="ion-no-margin ion-margin-top">
@@ -52,16 +63,6 @@
       <ion-button expand="block" routerLink="/edit/{{ item.uid }}">Editar</ion-button>
     </ion-card-content>
   </ion-card>
-
-  <!-- Perfil social -->
-  <p class="ion-padding-top">
-    Você fez login usando uma conta do Google.
-    Para editar seu perfil e/ou trocar a senha, clique no botão abaixo:
-  </p>
-  <ion-button expand="block" (click)="profile()" class="ion-margin-bottom">
-    <ion-icon name="person" slot="start"></ion-icon>
-    Ver / Editar perfil
-  </ion-button>
 
   <!-- Logout -->
   <p class="ion-padding-top">Para sair do aplicativo, clique no botão abaixo:</p>

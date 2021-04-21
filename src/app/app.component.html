@@ -9,7 +9,8 @@
           <ion-list-header class="ion-text-center">Fuinhas</ion-list-header>
           <ion-note>Futucando onde não deve.</ion-note>
 
-          <ion-menu-toggle auto-hide="false" *ngIf="registerOn == true">
+          <!-- "Cadastre-se" só aparece se não está cadastrado -->
+          <ion-menu-toggle auto-hide="false" *ngIf="registerOn">
             <ion-item routerDirection="root" routerLink="/user/register" lines="none" detail="false"
               routerLinkActive="selected">
               <ion-icon slot="start" name="person-add"></ion-icon>
