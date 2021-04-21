@@ -15,6 +15,7 @@ import { AlertController } from '@ionic/angular';
 
 // Usuário autenticado
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 // 6) Não permite somente espaços nos campos
 export function removeSpaces(control: AbstractControl) {
@@ -23,7 +24,7 @@ export function removeSpaces(control: AbstractControl) {
   }
   return null;
 }
- 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -38,14 +39,35 @@ export class RegisterPage implements OnInit {
   constructor(
     // 2) Injeta dependências
     public form: FormBuilder,
-    public firestore: AngularFirestore,
+    public afs: AngularFirestore,
 
     // Alert Controller
     public alert: AlertController,
 
     // Usuário autenticado
-    public auth: AngularFireAuth
+    public auth: AngularFireAuth,
+
+    // routerLInk
+    public router: Router
   ) { }
+
+  ionViewWillEnter() {
+
+    this.auth.onAuthStateChanged(
+      (userData) => {
+        if (userData) {
+          this.afs.firestore.doc(`register/${userData.uid}`).get()
+            .then((uData) => {
+
+              // Se não tem perfil
+              if (uData.exists) {
+                this.router.navigate(['/user/profile']);
+              }
+            });
+        }
+      }
+    );
+  }
 
   ngOnInit() {
     // 4) Cria o formulário de contatos
@@ -169,7 +191,7 @@ export class RegisterPage implements OnInit {
     );
 
     // Salva em um novo documento do Firebase Firestore
-    this.firestore.collection('register').doc(this.registerForm.value.uid).set(this.registerForm.value)
+    this.afs.collection('register').doc(this.registerForm.value.uid).set(this.registerForm.value)
       .then(
         () => {
 
@@ -198,6 +220,9 @@ export class RegisterPage implements OnInit {
 
           // Reset do formulário
           this.registerForm.reset();
+
+          // Vai para perfil
+          this.router.navigate(['/user/profile']);
         }
       }]
     });

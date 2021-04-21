@@ -60,7 +60,7 @@ const routes: Routes = [
   },
   {
     // Página de cadastro
-    path: 'register',
+    path: 'user/register',
     loadChildren: () => import('./user/register/register.module').then(m => m.RegisterPageModule),
 
     // Só pode ser vista se logado

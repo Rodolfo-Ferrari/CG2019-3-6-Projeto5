@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
+    <ion-menu contentId="main-content" type="overlay" (ionWillOpen)="menuChanged()"  (ionWillClose)="menuChanged()">
       <ion-content>
         <ion-list id="inbox-list">
 
@@ -9,8 +9,8 @@
           <ion-list-header class="ion-text-center">Fuinhas</ion-list-header>
           <ion-note>Futucando onde não deve.</ion-note>
 
-          <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="root" routerLink="/register" lines="none" detail="false"
+          <ion-menu-toggle auto-hide="false" *ngIf="registerOn == true">
+            <ion-item routerDirection="root" routerLink="/user/register" lines="none" detail="false"
               routerLinkActive="selected">
               <ion-icon slot="start" name="person-add"></ion-icon>
               <ion-label>Cadastre-se</ion-label>
