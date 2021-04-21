@@ -23,45 +23,79 @@ export function removeSpaces(control: AbstractControl) {
   }
   return null;
 }
- 
+
+// (*) Importa componentes de manipulação de rotas
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  selector: 'app-edit',
+  templateUrl: './edit.page.html',
+  styleUrls: ['./edit.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class EditPage implements OnInit {
 
   // 3) Atributos
   public registerForm: FormGroup; // Contém o formulário de cadastro
   public pipe = new DatePipe('en_US'); // Formatar as datas
+  
+  // (*) Id do usuário logado
+  public id: string; 
+
+  // (*) Dados do usuário no database
+  public userData: any; 
 
   constructor(
+
     // 2) Injeta dependências
     public form: FormBuilder,
-    public firestore: AngularFirestore,
+    public afs: AngularFirestore,
 
     // Alert Controller
     public alert: AlertController,
 
     // Usuário autenticado
-    public auth: AngularFireAuth
-  ) { }
+    public auth: AngularFireAuth,
+
+    // (*) Manipula rotas
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
+
+    // (*) Obtém o id do usuário a ser exibido
+    this.id = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit() {
+
     // 4) Cria o formulário de contatos
     this.registerFormCreate();
 
-    // Preenche os campos se usuário está logado
+    // (*) Preenche os campos a partir do database
     if (this.registerForm) {
-      this.auth.onAuthStateChanged(
-        (userData) => {
-          if (userData) {
-            this.registerForm.controls.name.setValue(userData.displayName.trim());
-            this.registerForm.controls.email.setValue(userData.email.trim());
-            this.registerForm.controls.uid.setValue(userData.uid.trim());
+
+      // Obtém cadastro do usuário do database
+      this.afs.firestore.doc(`register/${this.id}`).get()
+        .then((uData) => {
+
+          // Se tem perfil
+          if (uData.exists) {
+            
+            // Filtra dados do usuário no database
+            this.userData = uData.data();
+
+            // Insere dados do databse no formulário
+            this.registerForm.controls.name.setValue(this.userData.name);
+            this.registerForm.controls.email.setValue(this.userData.email);
+            this.registerForm.controls.telephone.setValue(this.userData.telephone);
+            this.registerForm.controls.whatsapp.setValue(this.userData.whatsapp);
+            this.registerForm.controls.birth.setValue(this.userData.birth);
+            this.registerForm.controls.cpf.setValue(this.userData.cpf);
+            this.registerForm.controls.address.setValue(this.userData.address);
+            this.registerForm.controls.gender.setValue(this.userData.gender);
+            this.registerForm.controls.pwd.setValue(this.userData.pwd);
+            this.registerForm.controls.uid.setValue(this.userData.uid);
           }
-        }
-      );
+        });
     }
   }
 
@@ -169,7 +203,7 @@ export class RegisterPage implements OnInit {
     );
 
     // Salva em um novo documento do Firebase Firestore
-    this.firestore.collection('register').doc(this.registerForm.value.uid).set(this.registerForm.value)
+    this.afs.collection('register').doc(this.registerForm.value.uid).set(this.registerForm.value)
       .then(
         () => {
 
@@ -191,17 +225,21 @@ export class RegisterPage implements OnInit {
   async presentAlert() {
     const alert = await this.alert.create({
       header: 'Oba!',
-      message: 'Cadastro realizado com sucesso!',
+      message: 'Cadastro atualizado com sucesso!',
       buttons: [{
         text: 'Ok',
         handler: () => {
 
           // Reset do formulário
           this.registerForm.reset();
+
+          // Redireciona para profile
+          this.router.navigate(['/user/profile']);
         }
       }]
     });
 
     await alert.present();
   }
+
 }
