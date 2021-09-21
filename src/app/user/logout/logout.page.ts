@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-// 1) Importa dependências
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
@@ -12,27 +11,20 @@ import { Router } from '@angular/router';
 export class LogoutPage implements OnInit {
 
   constructor(
-
-    // 2) Injeta dependências
     public auth: AngularFireAuth,
-    private router: Router
-  ) { }
+    public router: Router
+    ) { }
 
   ngOnInit() { }
 
-  // 3) Método de logout
   logout() {
     this.auth.signOut()
-    .then(
-      () => {
-        this.router.navigate(['/user/login']);
-      }
-    )
-    .catch(
-      (error) => {
-        console.error(error);
-      }
-    );
+    .then(() => {
+      this.router.navigate(['/home']);
+    })
+    .catch((error) => {
+      console.error('Erro ao fazer logout: ' + error);
+    });
   }
 
 }

@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-// 1) Importa
 import { AngularFireAuth } from '@angular/fire/auth';
-
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -13,52 +8,16 @@ import { Observable } from 'rxjs';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  constructor(public auth: AngularFireAuth) {}
 
-  // Atributos
-  private itemDoc: AngularFirestoreDocument<any>;
-  item: any;
+  ngOnInit() {}
 
-  constructor(
-
-    // 2) Injeta
-    public auth: AngularFireAuth,
-    public afs: AngularFirestore,
-    private router: Router,
-  ) { }
-
-  // Sempre que entramos nesta página
-  ionViewWillEnter() {
-
-    // Obtém dados do ligin
-    this.auth.onAuthStateChanged(
-      (userData) => {
-        if (userData) {
-
-          // Consulta cadastro no database
-          this.afs.firestore.doc(`register/${userData.uid}`).get()
-            .then((uData) => {
-
-              if (!uData.exists) {
-
-                // Se não tem cadastro, vai para a página de cadastro
-                this.router.navigate(['/user/register']);
-              } else {
-
-                // Se tem cadastro, exibe perfil
-                this.item = uData.data();
-              }
-            });
-        }
-      }
-    );
-  }
-
-  ngOnInit() { }
-
-  // 3) Abre perfil no Google
-  profile() {
+  // Abre perfil do usuário no Google em outra aba
+  goProfile() {
     window.open('https://myaccount.google.com/');
+
+    // Na mesma aba
+    // location.href = 'https://myaccount.google.com/';
     return false;
   }
-
 }

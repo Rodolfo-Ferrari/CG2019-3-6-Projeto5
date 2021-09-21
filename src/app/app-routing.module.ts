@@ -1,89 +1,110 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-// 1) Importa dependências
+// Importar Firebase Guards
 import {
   AngularFireAuthGuard,
   redirectUnauthorizedTo,
-  redirectLoggedInTo
+  redirectLoggedInTo,
 } from '@angular/fire/auth-guard';
 
-// 2) Redirecionamentos
-
-// Usuário não logado? Vai para login.
-const toLogin = () => redirectUnauthorizedTo(['/user/login']);
-
-// Usuário está logado? Vai para a página inicial.
-const isLogged = () => redirectLoggedInTo(['/register']);
+// Define redirecionadores
+const toLogin = () => redirectUnauthorizedTo(['/login']); // Usuário  não logado
+const isLogged = () => redirectLoggedInTo(['/profile']); // Usuário logado
 
 const routes: Routes = [
-
-  // Rota para a página inicial
+  // Rota da página inicial
   {
     path: '',
-    redirectTo: 'user/profile',
-    pathMatch: 'full'
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'folder/:id',
+    loadChildren: () =>
+      import('./folder/folder.module').then((m) => m.FolderPageModule),
   },
 
+  // Página inicial
   {
-    path: 'news',
-    loadChildren: () => import('./pages/news/news.module').then(m => m.NewsPageModule)
+    path: 'home',
+    loadChildren: () =>
+      import('./page/home/home.module').then((m) => m.HomePageModule),
   },
+
+  // Página de contatos
   {
     path: 'contacts',
-    loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactsPageModule)
+    loadChildren: () =>
+      import('./page/contacts/contacts.module').then(
+        (m) => m.ContactsPageModule
+      ),
   },
+
+  // Página sobre
   {
     path: 'about',
-    loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
-  },
-  {
-    path: 'user/login',
-    loadChildren: () => import('./user/login/login.module').then(m => m.LoginPageModule),
-
-    // Só pode ser vista se não logado
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: isLogged }
-  },
-  {
-    path: 'user/logout',
-    loadChildren: () => import('./user/logout/logout.module').then(m => m.LogoutPageModule),
-
-    // Só pode ser vista se logado
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: toLogin }
-  },
-  {
-    path: 'user/profile',
-    loadChildren: () => import('./user/profile/profile.module').then(m => m.ProfilePageModule),
-
-    // Só pode ser vista se logado
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: toLogin }
-  },
-  {
-    // Página de cadastro
-    path: 'user/register',
-    loadChildren: () => import('./user/register/register.module').then(m => m.RegisterPageModule),
-
-    // Só pode ser vista se logado
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: toLogin }
-  },
-  {
-    path: 'edit/:id',
-    loadChildren: () => import('./user/edit/edit.module').then( m => m.EditPageModule)
+    loadChildren: () =>
+      import('./page/about/about.module').then((m) => m.AboutPageModule),
   },
 
-  // Página de erro 404
-  // '**' TEM QUE SER SEMPRE A ÚLTIMA ROTA
+ // Página sobre
+ {
+  path: 'adotar',
+  loadChildren: () =>
+    import('./user/adotar/adotar.module').then((m) => m.AdotarPageModule),
+},
+
+ // Página doar
+ {
+  path: 'doar',
+  loadChildren: () =>
+    import('./user/doar/doar.module').then((m) => m.DoarPageModule),
+},
+
+// Pagina Login
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./user/login/login.module').then((m) => m.LoginPageModule),
+  },
+
+//Pagina Profile
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./user/profile/profile.module').then((m) => m.ProfilePageModule),
+  },
+
+  //Pagina Logout
+  {
+    path: 'logout',
+    loadChildren: () =>
+      import('./user/logout/logout.module').then((m) => m.LogoutPageModule),
+  },
+// Pagina Registro
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./user/register/register.module').then((m) => m.RegisterPageModule),
+  },
+  // Rota curinga (rotas inexistentes)
+  // TEM QUE SER SEMPRE A ÚLTIMA ROTA
   {
     path: '**',
-    loadChildren: () => import('./pages/e404/e404.module').then(m => m.E404PageModule)
-  }
-
+    loadChildren: () =>
+      import('./page/e404/e404.module').then((m) => m.E404PageModule),
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then( m => m.UserPageModule)
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -10,7 +10,7 @@
     <ion-title>Cadastre-se</ion-title>
 
     <!-- Logotipo -->
-    <ion-img src="assets/logo01.png" slot="end" class="pages-logo"></ion-img>
+    <ion-img src="assets/.png" slot="end" class="pages-logo"></ion-img>
 
   </ion-toolbar>
 </ion-header>
@@ -64,10 +64,9 @@
         <ion-input type="text" id="telephone" name="telephone" formControlName="telephone"></ion-input>
       </ion-item>
 
-      <!-- Campo 'Whatsapp' (whatsapp) -->
       <ion-item>
-        <ion-label for="whatsapp" position="floating" color="primary">
-          Whatsapp:
+        <ion-label for="cidade" position="floating" color="primary">
+          Cidade:
           <ion-text color="danger" *ngIf="registerForm.controls.whatsapp.errors">
             <small *ngIf="registerForm.controls.whatsapp.errors.required">* Obrigatório</small>
             <small *ngIf="registerForm.controls.whatsapp.errors.pattern">* Inválido</small>
@@ -75,6 +74,29 @@
         </ion-label>
         <ion-input type="text" id="whatsapp" name="whatsapp" formControlName="whatsapp"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label for="bairro" position="floating" color="primary">
+          Bairro:
+          <ion-text color="danger" *ngIf="registerForm.controls.whatsapp.errors">
+            <small *ngIf="registerForm.controls.whatsapp.errors.required">* Obrigatório</small>
+            <small *ngIf="registerForm.controls.whatsapp.errors.pattern">* Inválido</small>
+          </ion-text>
+        </ion-label>
+        <ion-input type="text" id="whatsapp" name="whatsapp" formControlName="whatsapp"></ion-input>
+      </ion-item>
+
+<ion-item>
+  <ion-label for="endereço" position="floating" color="primary">
+    Endereço:
+    <ion-text color="danger" *ngIf="registerForm.controls.whatsapp.errors">
+      <small *ngIf="registerForm.controls.whatsapp.errors.required">* Obrigatório</small>
+      <small *ngIf="registerForm.controls.whatsapp.errors.pattern">* Inválido</small>
+    </ion-text>
+  </ion-label>
+  <ion-input type="text" id="whatsapp" name="whatsapp" formControlName="whatsapp"></ion-input>
+</ion-item>
+
 
       <!-- Campo data de nascimento (birth) -->
       <ion-item>
@@ -120,16 +142,17 @@
         </ion-grid>
       </ion-item>
 
-      <!-- Campo endereço (address) -->
       <ion-item>
-        <ion-label for="address" position="floating" color="primary">
-          Endereço:
-          <ion-text color="danger" *ngIf="registerForm.controls.address.errors">
-            <small *ngIf="registerForm.controls.address.errors.required">* Obrigatório</small>
+        <ion-label for="profissão" position="floating" color="primary">
+          Profissão:
+          <ion-text color="danger" *ngIf="registerForm.controls.whatsapp.errors">
+            <small *ngIf="registerForm.controls.whatsapp.errors.required">* Obrigatório</small>
+            <small *ngIf="registerForm.controls.whatsapp.errors.pattern">* Inválido</small>
           </ion-text>
         </ion-label>
-        <ion-textarea type="text" id="address" name="address" formControlName="address" autoGrow="true"></ion-textarea>
+        <ion-input type="text" id="whatsapp" name="whatsapp" formControlName="whatsapp"></ion-input>
       </ion-item>
+
 
       <!-- Campo PCD (pwd) -->
       <ion-item>
