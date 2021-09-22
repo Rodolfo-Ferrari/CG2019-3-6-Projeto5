@@ -19,7 +19,8 @@ export class HomePage implements OnInit {
 
   constructor(
     // 2) Injeta dependências
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    public auth: AngularFireAuth
   ) {
 
     // 4) Acessa e obtém dados da coleção

@@ -5,39 +5,21 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <img src="assets/logo.png" style="width: 140px; height: 50px; margin-left: 40px;" alt="Parada Pet" routerLink="/home">
+    <ion-title class="ion-text-center">Notificação</ion-title>
 
-    <ion-thumbnail slot="end" *ngIf="auth.user | async as user; else showLogin">
-      <img src="{{user.photoURL}}" alt="{{user.displayName}}" routerLink="/profile">
-    </ion-thumbnail>
-    <ng-template #showLogin>
-      <ion-thumbnail slot="end">
-        <img src="assets/user.png" alt="logue-se" routerLink="/login">
-      </ion-thumbnail>
-    </ng-template>
+
+
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding-horizontal">
 
-
-
-
-
-
-
-
-  <!-- NÃO RETIRAR  <div *ngFor="let item of items | async">
-     <h3>{{ item.title }}</h3>
-     <img src="{{ item.thumbnail }}">
-     {{ item.resume }}
-    </div>-->
-
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam id, esse minima maiores quo quam modi unde
+    corrupti dolores cupiditate, accusamus ipsam officia harum repellat officiis nisi numquam atque odit?</p>
 
 </ion-content>
 
-<!-- Footer -->
 
 <ion-footer>
   <ion-toolbar>

@@ -9,7 +9,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class ProfilePage implements OnInit {
   constructor(public auth: AngularFireAuth) {}
-
+ 
   ngOnInit() {}
 
   // Abre perfil do usuário no Google em outra aba
